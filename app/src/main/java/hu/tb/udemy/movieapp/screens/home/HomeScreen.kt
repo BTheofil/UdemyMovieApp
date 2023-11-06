@@ -11,8 +11,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import hu.tb.udemy.movieapp.MovieRow
+import hu.tb.udemy.movieapp.model.Movie
+import hu.tb.udemy.movieapp.model.getMovies
 import hu.tb.udemy.movieapp.navigation.MovieScreens
+import hu.tb.udemy.movieapp.widget.MovieRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +34,7 @@ fun HomeScreen(navController: NavController) {
 fun MainContent(
     navController: NavController,
     paddingValues: PaddingValues,
-    movieList: List<String> = listOf("Avatar", "Harry Potter", "Avengers")
+    movieList: List<Movie> = getMovies()
 ) {
     LazyColumn(
         modifier = Modifier
@@ -40,7 +42,7 @@ fun MainContent(
     ) {
         items(items = movieList) {
             MovieRow(it) { movie ->
-                navController.navigate(MovieScreens.DetailsScreen.name)
+                navController.navigate(MovieScreens.DetailsScreen.name + "/$movie")
             }
         }
     }
